@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>daw_mhttpd web_app</title>
+	<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+	<h1>daw_mhttpd web_app</h1>
+	<nav>
+		<a href="/">Home</a>
+		<a href="/about">About</a>
+		<a href="/users/42">User 42</a>
+	</nav>
+	<p>Page: <code id="page"></code></p>
+	<p>Server time: <code id="time">…</code></p>
+	<form id="echo">
+		<input name="text" value="Hello, World!">
+		<button>Echo</button>
+		<code id="echoed"></code>
+	</form>
+	<script>
+		// Every page path is served this same file; the app reads the path itself
+		document.getElementById( 'page' ).textContent = location.pathname;
+
+		fetch( '/api/time' )
+			.then( r => r.text( ) )
+			.then( t => document.getElementById( 'time' ).textContent = t );
+
+		document.getElementById( 'echo' ).addEventListener( 'submit', e => {
+			e.preventDefault( );
+			fetch( '/api/echo', { method: 'POST', body: e.target.text.value } )
+				.then( r => r.text( ) )
+				.then( t => document.getElementById( 'echoed' ).textContent = t );
+		} );
+	</script>
+</body>
+</html>
