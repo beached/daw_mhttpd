@@ -386,6 +386,7 @@ auto cfg = daw::mhttpd::config{
 | `connection_timeout` | 30 s | idle connections are closed after this |
 | `connection_limit` | `0` | most connections open at once; past it new ones wait in the listen queue until one closes. `0` is libmicrohttpd's default, `FD_SETSIZE - 4`. With a pool it is split between the threads and must be at least an explicit `thread_pool_size` |
 | `per_ip_connection_limit` | `0` | most connections open at once from one address; past it new ones are closed; `0` is no limit |
+| `connection_memory_limit` | `0` | bytes each connection gets for the request line, headers and its read and write buffers; libmicrohttpd zeroes it between keep-alive requests, so smaller costs less CPU per request and less memory per open connection. Headers that do not fit get `431`. `0` is libmicrohttpd's default, 32 KiB |
 | `shutdown_grace` | 5 s | how long shutdown waits for open connections |
 | `compression` | disabled | see [Compression](#compression) |
 

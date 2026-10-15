@@ -766,6 +766,12 @@ namespace daw::mhttpd {
 		// Most connections open at once from one IP address; further ones are
 		// closed as they arrive. 0 = no limit
 		unsigned per_ip_connection_limit = 0;
+		// Bytes of memory each connection gets for reading the request line and
+		// headers and for its read and write buffers. libmicrohttpd zeroes it
+		// between keep-alive requests, so a smaller one costs less CPU per
+		// request and less memory per open connection. Requests whose headers
+		// do not fit get 431. 0 uses libmicrohttpd's default (32 KiB).
+		std::size_t connection_memory_limit = 0;
 		std::chrono::milliseconds shutdown_grace{
 		  5000 }; // wait for suspended requests on stop
 		compression_config compression{ };

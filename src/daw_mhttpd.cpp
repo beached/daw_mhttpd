@@ -1582,6 +1582,11 @@ namespace daw::mhttpd {
 			                  as<option_value>( config.per_ip_connection_limit ),
 			                  nullptr } );
 		}
+		if( config.connection_memory_limit != 0 ) {
+			opts.push_back( { MHD_OPTION_CONNECTION_MEMORY_LIMIT,
+			                  as<option_value>( config.connection_memory_limit ),
+			                  nullptr } );
+		}
 		if( threads > 1 ) {
 			opts.push_back( { MHD_OPTION_THREAD_POOL_SIZE,
 			                  as<option_value>( threads ),
